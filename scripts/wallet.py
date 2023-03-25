@@ -5,15 +5,19 @@ config = dotenv_values(".env")
 import wallet
 
 ''''
-this class allows the user to create arbitrary wallet (without generating key) and do the operations 
+this class allows the user to create arbitrary wallet (without generating key) and do the operations for the user working on the streamlit side
 
-
+once the user opens the application, it should be initiating the wallet corresponding to the user and fetch the address.
 
 '''
 class Wallet:
     w3
-    def __init__(self, private_key=None):
+    name
+    email
+    def __init__(self,name,email, private_key=None):
         self.w3 = Web3(Web3.HTTPProvider(config['INFURA_MUMBAI_RPC']))
+        self.name = name
+        self.email = email
         if private_key:
             self.account = self.w3.eth.account.privateKeyToAccount(private_key)
         else:
@@ -51,3 +55,7 @@ class Wallet:
         function_call = contract.get_function_by_name(function_name)(*args)
         tx_hash = self.send_transaction(contract_address, 0, function_call.data)
         return tx_hash
+
+
+    def get_address(self):
+        return self.account.address
