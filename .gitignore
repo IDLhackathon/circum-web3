@@ -143,3 +143,6 @@ typechain-types
 cache
 artifacts
 
+
+# python 
+web_app/circum/**
