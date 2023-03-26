@@ -1,6 +1,5 @@
-eth-ape>=0.4.0
-ape-solidity
 python-dotenv
-brownie
-wheel
 ocean-lib
+streamlit
+web3
+eth-brownie

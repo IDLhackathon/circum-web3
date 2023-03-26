@@ -1,4 +1,3 @@
-from ape import accounts, Contract
 from web3 import utils,contract, Web3
 import typing
 from dotenv import dotenv_values
@@ -7,8 +6,6 @@ import json
 
 '''
 this is the core class that will allow the wallet to interact with contract.
-
-
 
 '''
 
@@ -26,18 +23,10 @@ def get_abi_from_artifact():
 
 config = dotenv_values(".env")
 
-class userInformation:
-    personId = int
-    userAddress = string
-
-##
+## this address can be replaced with what is defined in the setting.
 address = '0xeb1C79E2632acf0c699C27c58e4e7D4557A60cF7'
 
-
 class Foam:
-    contractAddress 
-    contractInstance
-    w3
     def __init__(self):
         self.contractAddress =  address
         self.abi = get_abi_from_artifact()

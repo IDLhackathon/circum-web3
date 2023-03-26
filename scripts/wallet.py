@@ -1,25 +1,26 @@
 from web3 import Web3
-from brownie import accounts, network, Contract
+
 from dotenv import dotenv_values
 config = dotenv_values(".env")
-import wallet
+
 
 ''''
 this class allows the user to create arbitrary wallet (without generating key) and do the operations for the user working on the streamlit side
 
 once the user opens the application, it should be initiating the wallet corresponding to the user and fetch the address.
 
+
+IMP: THIS IS NOT AT ALL THE WALLET USED FOR PRODUCTION, THERE ARE VARIOUS CONCEPTS THAT ARE ABSTRACTED IN ORDER TO 
+CREATE SIMPLE 
 '''
 class Wallet:
-    w3
-    name
-    email
     def __init__(self,name,email, private_key=None):
         self.w3 = Web3(Web3.HTTPProvider(config['INFURA_MUMBAI_RPC']))
         self.name = name
         self.email = email
         if private_key:
             self.account = self.w3.eth.account.privateKeyToAccount(private_key)
+
         else:
             self.account = self.w3.eth.account.create()
 
@@ -59,3 +60,6 @@ class Wallet:
 
     def get_address(self):
         return self.account.address
+    
+    def mint_tokens(self):
+        pass
