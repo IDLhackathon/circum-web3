@@ -1,6 +1,10 @@
 import streamlit as st
 import pandas as pd
-
+import importlib.util
+#import sys
+#sys.path.append('.')
+import model_yolo
+from PIL import Image
 
 #General settings
 st.set_page_config(
@@ -19,11 +23,10 @@ st.markdown("<h1 style='color: black;text-decoration:underline solid #000000;fon
 st.sidebar.markdown("# Welcome on Circum App !")
 
 with st.form(key='form_1'):
-	long = st.text_input(label='Enter longitude')
-	lat = st.text_input(label='Enter latitude')
-	zoom = st.text_input(label='Enter a zoom value')
-
-	submitted = st.form_submit_button(label='Submit')
-
+    uploaded_file = st.file_uploader("Choose an image")
+    submitted = st.form_submit_button(label='Submit')
+    
 if submitted:
-    st.write(long + lat + zoom)
+    img = model_yolo.predict_img() 
+    st.image(img, caption='Object detection')
+    
