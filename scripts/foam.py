@@ -28,7 +28,7 @@ address = '0xeb1C79E2632acf0c699C27c58e4e7D4557A60cF7'
 
 class Foam:
     def __init__(self):
-        self.contractAddress =  address
+        self.contractAddress = address
         self.abi = get_abi_from_artifact()
         self.w3 = Web3(Web3.HTTPProvider(config["INFURA_MUMBAI_RPC"]))
         self.contractInstance = contract(addres = self.contractAddress,abi=self.abi)

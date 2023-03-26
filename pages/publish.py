@@ -3,6 +3,11 @@ import sys
 import importlib.util
 import os
 from scripts import wallet
+from scripts.Foam import Foam
+from dotenv import dotenv_values
+import time
+import random, string
+
 #General settings
 st.set_page_config(
     page_title="ocean-marketplace",
@@ -10,20 +15,38 @@ st.set_page_config(
 )
 
 
+st.title("Create data certificate for obstacle detection")
 
-#import wallet
-st.title("Create data certificate @ OCEAN_Protocol")
+## TODO: integrate the infura endpoint to transfer the details
+
+
+def generate_mock_hash():
+    # generate a random transaction hash
+    transaction_hash = ''.join(random.choices(string.ascii_lowercase + string.digits, k=64))
+
+    # construct the Etherscan URL for the transaction hash
+    etherscan_url = f"https://mumbai.polygonscan.com/address/0xeb1C79E2632acf0c699C27c58e4e7D4557A60cF7#readContract"
+
+    # display the transaction hash as a link to Etherscan
+    return f"[{transaction_hash}]({etherscan_url})"
+
+
 
 # Create a form
 with st.form(key="form"):
     st.header("image details ")
 
     # Upload image button and display uploaded image
-    uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
-
-    if uploaded_file:
+    uploaded_file = st.file_uploader("Upload the image regarding", type=["png", "jpg", "jpeg"])
+    
+         
+    if uploaded_file: 
         st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
-
+        # with st.spinner("Running the upload..."):
+        #     time.sleep(5)
+        #     submit_image_analysis = st.form_submit_button("Submit for mock yolo verification")
+     # display the result
+        st.write("Result(%): 90 , category: cesna-airplane")
     
     name = st.text_area("name", help="adding the name of the publisher") 
     # email 
@@ -36,35 +59,31 @@ with st.form(key="form"):
     tags_options = ["Millitary vehicles", "trench-warfare", "civilian building", "regroupment"]
     tags = st.multiselect("Tags", tags_options, help="Select one or more tags")
 
-    # Terms & Conditions tickmark
     terms_and_conditions = st.checkbox("I accept T&C", value=False)
-    # dataset_type
 
     asset_type_options = ["Image", "Cartograph"]
     selected_asset_types = st.selectbox("Asset Type", asset_type_options)
 
-    # Submit button
     submit_button = st.form_submit_button("Submit")
 
-col1, col2, _ = st.columns([1, 1, 3])
+    col1, col2, _ = st.columns([1, 1, 3])
 
-with col1:
-    with st.expander("Account infromation", expanded=True):
-        st.write("account information: 0x.....")
-        st.write("account dataTokens: 10 DT")
-    # Add more content to the card if needed
-
-# Process the form data after submission
-if submit_button:
-    if terms_and_conditions:
+    with col1:
+        user_w = wallet.Wallet("test", "test@demo.com" )
+        with st.expander("Account infromation", expanded=True):
+            st.write("account information:",user_w.get_address())
+            st.write("account dataTokens: 10 DT")
+   
+    if submit_button:
+        if terms_and_conditions:
         
-        
-        #wallet_created =  Wallet(name=name, email=email)
-        wallet = wallet()
-        st.success("Form submitted successfully")
-        st.write("wallet created")
-        st.write("Description:", description)
-        st.write("Tags:", tags)
+            st.success("Form submitted successfully")
+            
+            st.write("transaction hash Description:")
+           
+            st.markdown(generate_mock_hash(), unsafe_allow_html=True)
 
-    else:
-        st.error("Please accept the terms and conditions to submit the form")
+            st.write("Tags:", tags[0])
+
+        else:
+            st.error("Please accept the terms and conditions to submit the form")

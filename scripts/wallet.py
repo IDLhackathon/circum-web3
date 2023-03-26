@@ -10,9 +10,18 @@ this class allows the user to create arbitrary wallet (without generating key) a
 once the user opens the application, it should be initiating the wallet corresponding to the user and fetch the address.
 
 
-IMP: THIS IS NOT AT ALL THE WALLET USED FOR PRODUCTION, THERE ARE VARIOUS CONCEPTS THAT ARE ABSTRACTED IN ORDER TO 
-CREATE SIMPLE 
+IMP: THIS IS NOT AT ALL THE WALLET USED FOR PRODUCTION, THERE ARE VARIOUS CONCEPTS THAT ARE ABSTRACTED HERE and thus 
+
+
+instructions to use: 
+1. insure that variable INFURA_MUMBAI_RPC is set in the env 
+2. import the following operator (with private key as optional variable)
+wallet = Wallet()
+
+
+
 '''
+ocean = '0xd8992Ed72C445c35Cb4A2be468568Ed1079357c8'
 class Wallet:
     def __init__(self,name,email, private_key=None):
         self.w3 = Web3(Web3.HTTPProvider(config['INFURA_MUMBAI_RPC']))
@@ -63,3 +72,17 @@ class Wallet:
     
     def mint_tokens(self):
         pass
+
+    def get_transaction_hash(user_address, function_signature, contract_address, web3_provider):
+    # create a web3 instance
+
+    # create a contract instance
+        contract = self.w3.eth.contract(address=contract_address, abi=contract_abi)
+
+    # create a function object for the function you want to call
+        function = contract.functions[function_signature]
+
+    # get the transaction hash for the function call
+        transaction_hash = function.transact({'from': user_address}).hex()
+
+        return transaction_hash
